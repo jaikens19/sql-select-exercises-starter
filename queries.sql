@@ -30,7 +30,7 @@
      2018 from the "cities" table.
 */
 
--- your query here
+select city, state, population_estimate_2018 from cities;
 
 \echo ========= Problem 2.2 ====================================================
 \echo
@@ -39,7 +39,8 @@
      "airports" table.
 */
 
--- your query here
+select name from airports;
+
 
 ---- Phase 3: Add WHERE clauses ------------------------------------------------
 -- Select specific rows from a table using WHERE and common operators.
@@ -51,7 +52,8 @@
      in 2018 of the city of San Diego.
 */
 
--- your query here
+select population_estimate_2018 from cities
+where city = 'San Diego'
 
 \echo ========= Problem 3.2 ====================================================
 \echo
@@ -61,7 +63,10 @@
       Phoenix, Jacksonville, Charlotte, Nashville.
 */
 
- -- your query here
+select city, state, population_estimate_2018 from cities
+where city in ('Phoenix', 'Jacksonville', 'Charlotte', 'Nashville')
+;
+
 
 \echo ========= Problem 3.3 ====================================================
 \echo
@@ -71,7 +76,9 @@
      city, state, and estimated population in 2018 columns.
 */
 
--- your query here
+select city, state, population_estimate_2018 from cities
+where population_estimate_2018 BETWEEN 800000 and 900000
+;
 
 \echo ========= Problem 3.4 ====================================================
 \echo
@@ -81,7 +88,9 @@
      1,000,000 people).
 */
 
--- your query here
+select city from cities
+where population_estimate_2018 >= 1000000
+;
 
 \echo ========= Problem 3.5 ====================================================
 \echo
@@ -91,7 +100,9 @@
      uses a WHERE clause to return only the cities in Texas.
 */
 
--- your query here
+select city, (population_estimate_2018 / 1000000) from cities
+where state = 'Texas'
+;
 
 \echo ========= Problem 3.6 ====================================================
 \echo
@@ -104,7 +115,9 @@
      New York, California, Texas.
 */
 
--- your query here
+select city, state, population_estimate_2018 from cities
+where city NOT IN ('New York', 'California', 'Texas')
+;
 
 \echo ========= Problem 3.7 ====================================================
 \echo
@@ -115,7 +128,9 @@
      (Note: See the PostgreSQL doc on Pattern Matching for more information.)
 */
 
--- your query here
+select city, state, (population_estimate_2018 / 1000000) from cities
+where  city like '%S%'
+;
 
 \echo ========= Problem 3.8 ====================================================
 \echo
@@ -126,7 +141,9 @@
      population in 2018.
 */
 
--- your query here
+select city, land_area_sq_mi_2016, population_estimate_2018 from cities
+where land_area_sq_mi_2016 > 400
+OR population_estimate_2018 > 2000000
 
 \echo ========= Problem 3.9 ====================================================
 \echo
@@ -137,7 +154,9 @@
      name, the land area, and the estimated population in 2018.
 */
 
--- your query here
+select city, land_area_sq_mi_2016, population_estimate_2018 from cities
+where (land_area_sq_mi_2016 > 400 OR population_estimate_2018 > 2000000)
+AND NOT (land_area_sq_mi_2016 > 400 and population_estimate_2018 > 2000000);
 
 \echo ========= Problem 3.10 ===================================================
 \echo
@@ -148,7 +167,11 @@
       in 2010.
 */
 
--- your query here
+select city, population_estimate_2018, population_census_2010
+from cities
+where (population_estimate_2018 - population_census_2010) > 200000
+;
+
 
 ---- Phase 4: Use a JOIN operation ---------------------------------------------
 -- Retrieve rows from multiple tables joining on a foreign key.
@@ -163,7 +186,10 @@
      airport names and city names only.
 */
 
--- your query here
+select name, city_id from airports
+inner join cities on (airports.city_id = cities.id)
+;
+
 
 \echo ========= Problem 4.2 ====================================================
 \echo
@@ -175,7 +201,9 @@
       rows.)
 */
 
--- your query here
+select count(*) from airports
+inner join cities on (airports.city_id = cities.id)
+AND city_id=1;
 
 --------------------------------------------------------------------------------
 ---- Bonuses:
